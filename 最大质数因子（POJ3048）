@@ -1,0 +1,69 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+template <class T>
+class sPrime {
+public: 
+    bool ifPrime(T n) {
+        for (int i = 2; i < n; i++)
+        {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    T maxPrime(T n) {
+        T s = 0, num = 0;
+        for (int i = 2; i < n; i++) {
+            if (n % i == 0 && ifPrime(i) && (i > s))
+            {
+                s = i;
+                num++;
+            }
+
+        }
+        if (num == 0) return n;
+        else  return s;
+    }
+};
+
+int main()
+{
+    int each=0,max = 0,maxNum=0;
+    ifstream inFile;
+    inFile.open("in.txt", ios::app);
+    string m;
+    if (!inFile.is_open()) {	// 判断文件是否打开失败
+        cout << "文件打开失败！" << endl;
+        system("pause");
+        exit(-1);
+    }
+    int* t = new int[5000];
+    int a = 0;
+    while (getline(inFile, m))
+    {
+        int num = atoi(m.c_str());
+        t[a] = num;
+        a++;
+        
+
+    }
+    sPrime<int> aa;
+    
+    
+    for (int i = 0; i < a; i++) {
+        each = aa.maxPrime(t[i]);
+        if (each > max)
+        {
+            max = each;
+            maxNum = i;
+        }
+
+    }
+    cout << t[maxNum];
+}
+1.👍先写函数判断是否为素数
+2.✌️再写函数寻找最大素数因子（别忘记本身为素数的情况，最大素数因子为其本身）
+3.👌各数最大素数因子比较出最大值
