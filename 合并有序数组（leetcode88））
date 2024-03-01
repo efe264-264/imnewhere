@@ -1,0 +1,60 @@
+1.👍时间、空间复杂度小：倒序双（三）指针直接导入nums1中同时顺序为递增
+  
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int i  = m-1, j = n-1;
+        int p = nums1.size()-1;
+
+        while(i >= 0 && j >=0)
+        {
+            if(nums1[i]>nums2[j])
+            {
+                nums1[p] = nums1[i];
+                i--;
+            }
+            else
+            {
+                nums1[p] = nums2[j];
+                j--;
+            }
+            p--;
+        }
+        while(j>=0)
+        {
+            nums1[p] = nums2[j];
+            j--;
+            p--;
+        }
+      
+    }
+};
+2.✌️一开始的解法，双指针、新建nums3存储，再复制到nums1（时间空间复杂度大）
+
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+vector<int>nums3;
+int a =0;
+int b= 0;
+
+while ((a <m)&&( b <n))//情况一，指针都没到最尾时或同时到尾
+{
+    if (nums1[a] > nums2[b]) { nums3.push_back(nums2[b]); b++; }
+    else { nums3.push_back(nums1[a]); a++; }
+}
+while ((a >= m) && (b < n))//情况二，指针到1尾没到2尾(注意防止溢出）
+{
+    nums3.push_back(nums2[b]); b++;
+}
+while ((a < m) && (b >= n))//情况二，指针到1尾没到2尾(注意防止溢出）
+{
+        nums3.push_back(nums1[a ]); a++;
+
+}
+for (int i = 0; i < m + n; i++) {
+    nums1[i] = nums3[i];
+}
+       
+    }
+};
