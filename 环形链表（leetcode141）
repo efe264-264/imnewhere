@@ -1,0 +1,31 @@
+1、👍快慢指针法（1） 设置快慢指针，快指针一次走两格，慢指针1格//最坏情况需要n
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+         if(head==NULL||head->next==NULL) return false;
+        ListNode *p=head;
+        ListNode *q=head->next;
+       
+        while(p!=q){
+            if((q==nullptr) || (q->next==nullptr)) return false;
+            p=p->next;
+            q=q->next->next;
+        }
+        return true;
+    }
+};
+2、✌️快慢指针法（2） //最坏情况时间需要n/2
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if (head == nullptr || head->next == nullptr) return false;//排除只有一个元素或无元素情况
+        ListNode *fast = head;//设置快慢指针
+        ListNode *slow = head;
+        while (fast != nullptr && fast->next != nullptr) {//换一种方式，在nullptr前循环
+            fast = fast->next->next;//一次两个
+            slow = slow->next;//一次一个
+            if (fast == slow) return true;//若相等说明是环形
+        }
+        return false;//若不相等且退出则非环性
+    }
+};
